@@ -1,4 +1,6 @@
 import { encodeRailFence, decodeRailFence } from './railFence.js'
+import { matrix_cipher_a } from './ex_2.js'
+import { matrix_cipher_b } from './ex_3.js'
 
 const input = document.getElementById('input')
 const output = document.getElementById('output')
@@ -18,8 +20,10 @@ function encode () {
       output.value = encodeRailFence(input.value, parseInt(key.value))
       break
     case 1:
+      output.value = matrix_cipher_a(input.value, key.value)
       break
     case 2:
+      output.value = matrix_cipher_b(input.value, key.value)
       break
   }
 }

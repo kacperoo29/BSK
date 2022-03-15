@@ -1,5 +1,6 @@
-function matrix_cipher_a(text, key){
-    let array_of_key = key.split("-");
+
+export function matrix_cipher_a(text, key){
+    let array_of_key = key.split("-");        
     let text_into_array = text.split("");
     return matrix_cipher(text_into_array, array_of_key);
 }
@@ -15,4 +16,5 @@ function matrix_cipher(text_into_array, array_of_key){
     return ciphered.join("");
 }
 
-console.log( matrix_cipher_a("CRYPTOGRAPHYOSA", "3-1-4-2") );
+
+// console.log( matrix_cipher_a("CRYPTOGRAPHYOSA", "3-1-4-2") );
