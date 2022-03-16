@@ -27,18 +27,22 @@
         />
       </div>
 
-      <div class="form-group">
-        <label for="key">Key</label>
-        <input class="form-control" type="text" id="key" name="key" />
-      </div>
-
-      <div class="form-group">
-        <label for="algorithm">Algorithm</label>
-        <select class="form-control" name="algorithm" id="algorithm">
-          <option value="0">Rail fence</option>
-          <option value="1">Przestawienie macierzowe 2a</option>
-          <option value="2">Przestawienie macierzowe 2b</option>
-        </select>
+      <div class="form-row row">
+        <div class="form-group col-md-4">
+          <label for="algorithm">Algorithm</label>
+          <select class="form-control" name="algorithm" id="algorithm">
+            <option value="0">Rail fence</option>
+            <option value="1">Przestawienie macierzowe 2a</option>
+            <option value="2">Przestawienie macierzowe 2b</option>
+          </select>
+        </div>
+        <div class="form-group col-md-8">
+          <label for="key">Key</label>
+          <input class="form-control" type="number" id="key" name="key" />
+          <div class="invalid-feedback">
+            Invalid key.
+          </div>
+        </div>
       </div>
 
       <div class="form-group">
@@ -48,6 +52,5 @@
     </div>
 
     <script type="module" src="/public/main.js"></script>
-    <script type="module" src="/public/html_modification.js"></script>
   </body>
 </html>

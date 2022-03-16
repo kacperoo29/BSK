@@ -8,6 +8,14 @@ export function matrix_decipher_b(text, key_in_text){
 
     return matrix_decipher(text, key);
 }
+
+export function validateKey2b(key)
+{
+    let regex = /^[A-Z]+$/
+
+    return regex.test(key)
+}
+
 function matrix_cipher(text, key){
     let text_in_array = text.replace(new RegExp(" ", 'g'), "");
     let cyphered_array = [];

@@ -10,6 +10,26 @@ export function matrix_decipher_a(text, key){
     return matrix_decipher(text_into_array, array_of_key);
 }
 
+export function validateKey2a(key) {
+    let regex = /^[0-9]+(-[0-9]+)*$/
+    if (!regex.test(key))
+        return false
+
+    let array_of_key = key.split("-")
+    let valid = true
+    let existing = []
+    for (let element of array_of_key) {        
+        let intElement = parseInt(element)
+        if (intElement > array_of_key.length || existing.includes(intElement)) {
+            valid = false
+            break
+        }
+        existing.push(intElement)
+    }
+
+    return valid
+}
+
 function matrix_cipher(text_into_array, array_of_key){
     let ciphered = [];
     for( let i = 0 ; i < text_into_array.length ; i += array_of_key.length ){
