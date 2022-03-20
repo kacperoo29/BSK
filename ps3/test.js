@@ -1,7 +1,7 @@
 import { decodeRailFence, encodeRailFence } from './public/railFence.js'
 import { matrix_cipher_a, matrix_decipher_a } from './public/ex_2.js'
 import { matrix_cipher_b, matrix_decipher_b } from './public/ex_3.js'
-import assert from 'assert/strict'
+import assert from 'assert'
 
 describe('Rail fence tests', function () {
   const normalText1 = 'CRYPTOGRAPHY'
