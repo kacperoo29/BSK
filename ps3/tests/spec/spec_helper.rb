@@ -12,7 +12,7 @@
 # the additional setup, and require it from the spec files that actually need
 # it.
 require 'capybara'
-
+require 'selenium-webdriver'
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
@@ -96,5 +96,13 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+  Capybara.register_driver :selenium_headless do |app|
+    capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+      chromeOptions: { args: %w(headless disable-gpu) }
+    )
+    browser_options = ::Selenium::WebDriver::Firefox::Options.new()
+    browser_options.args << '--headless'
 
+    Capybara::Selenium::Driver.new(app, :browser => :firefox,  options: browser_options )
+  end
 end
