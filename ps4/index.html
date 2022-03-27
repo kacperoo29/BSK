@@ -10,6 +10,33 @@
     />
   </head>
   <body>
+    <div class="container">
+      <div class="form-group">
+        <label for="output">Output</label>
+        <input
+          class="form-control"
+          disabled
+          type="text"
+          id="output"
+          name="output"
+        />
+      </div>
+
+      <div class="form-row row">
+        <div class="form-group">
+          <label for="key">Key</label>
+          <input class="form-control" type="text" id="key" name="key" />
+          <div class="invalid-feedback">
+            Invalid key.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-primary" id="start">Start</button>
+        <button class="btn btn-secondary" id="stop">Stop</button>
+      </div>
+    </div>
 
     <script type="module" src="/public/main.js"></script>
   </body>
