@@ -1,13 +1,14 @@
-const bits = 127
+const bits = 127n
 
-var state = 1 << 127 ^ 1;
+var state = 1n << bits ^ 1n;
 
 export function reloadState(){
-    state = 1 << 127 ^ 1;
+    state = 1n << bits ^ 1n;
 }
 
-export function lfsr(taps, isNew) {
+export function lfsr(taps) {
     var array = parser(taps)
+
     return lfsr_impl(array)
 }
 
@@ -24,13 +25,13 @@ function parser(taps) {
     expected = expected.replace(/x/, '1')
 
     var array = expected.split(/\+/)
-    array.forEach(n => n = parseInt(n))
+    array.forEach((n, i) => array[i] = BigInt(parseInt(n)))
 
     return array
 }
 
 function generateBytes_impl(taps) {
-    var result = 0
+    var result = 0n
     for (var i = 0; i < bits; ++i) {
         result ^= lfsr_impl(taps) << i
     }
@@ -39,14 +40,21 @@ function generateBytes_impl(taps) {
 }
 
 function lfsr_impl(taps) {
+    // Reduce every power by one for algorithm
     taps.forEach((tap) => --tap)
+
+    // Copy current state
     var newbit = state
+    // For each power xor current state in its place
     taps.forEach((tap) => {
         newbit ^= state >> (bits - tap) 
     })
 
-    newbit &= 1
-    state = (state >> 1) ^ (newbit << bits)
+    // Take the last bit of the result
+    newbit &= 1n
+    // Shift the old state and xor it with generated bit
+    // at the beggining
+    state = (state >> 1n) ^ (newbit << bits)
 
     return newbit
 }

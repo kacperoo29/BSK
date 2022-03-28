@@ -3,11 +3,11 @@ import { cipherLSFR } from '../public/cipherWithLSFR.js'
 
 describe('LSFR cipher test', function () {
     const normalText1 = 'CRYPTOGRAPHY'
-    const encodedText1 = "\u000b(=mnT6\u0018ola^";
+    const encodedText1 = "\x0F4jI\x18)tK\r6{@";
     const key1 = 'x^3';
   
     const normalText2 = 'test bardzo wazny'
-    const encodedText2 = "<\u001f\u0017I\u001ay\u00108JFF\'FOg)\u0001";
+    const encodedText2 = "8\x03@ml\x04Rk(\x1C\\9;\x07Iw5";
     const key2 = 'x^3';
 
     describe('Encode test 1', function () {
@@ -31,7 +31,7 @@ describe('LSFR cipher test', function () {
 
         assert.equal(string, encodedText2);
         })
-    })
+    })    
     describe('Decode test 2', function () {
         it(`should equal to ${normalText2} when input ${encodedText2} and key ${key2}`, function () {
             let string = cipherLSFR( encodedText2, key2);
