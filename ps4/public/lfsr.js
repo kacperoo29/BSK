@@ -1,9 +1,13 @@
 const bits = 127
-var state = 1 << 127 ^ 1
 
-export function lfsr(taps) {
+var state = 1 << 127 ^ 1;
+
+export function reloadState(){
+    state = 1 << 127 ^ 1;
+}
+
+export function lfsr(taps, isNew) {
     var array = parser(taps)
-
     return lfsr_impl(array)
 }
 
