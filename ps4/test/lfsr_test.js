@@ -7,8 +7,8 @@ describe('LSFR cipher test', function () {
     const key1 = 'x^3';
   
     const normalText2 = 'test bardzo wazny'
-    const encodedText2 = "8\x03@ml\x04Rk(\x1C\\9;\x07Iw5";
-    const key2 = 'x^3';
+    const encodedText2 = ";\u001c3m_zbm\u0017z\\^GgE\by";
+    const key2 = 'x^3+x^5+x^9';
 
     describe('Encode test 1', function () {
         it(`should equal to ${encodedText1} when input ${normalText1} and key ${key1}`, function () {
