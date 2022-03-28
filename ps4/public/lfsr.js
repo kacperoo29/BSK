@@ -1,9 +1,15 @@
 const bits = 127
-var state = 1 << 127 ^ 1
+function State(){
+    this.state = 1 << 127 ^ 1;
+}
+var objectWithState = new State();
 
-export function lfsr(taps) {
+export function reloadState(){
+    objectWithState = new State();
+}
+
+export function lfsr(taps, isNew) {
     var array = parser(taps)
-
     return lfsr_impl(array)
 }
 
@@ -36,13 +42,13 @@ function generateBytes_impl(taps) {
 
 function lfsr_impl(taps) {
     taps.forEach((tap) => --tap)
-    var newbit = state
+    var newbit = objectWithState.state
     taps.forEach((tap) => {
-        newbit ^= state >> (bits - tap) 
+        newbit ^= objectWithState.state >> (bits - tap) 
     })
 
     newbit &= 1
-    state = (state >> 1) ^ (newbit << bits)
+    objectWithState.state = (objectWithState.state >> 1) ^ (newbit << bits)
 
     return newbit
 }

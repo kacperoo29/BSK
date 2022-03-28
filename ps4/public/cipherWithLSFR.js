@@ -1,9 +1,19 @@
+import { lfsr, reloadState } from './lfsr.js';
+
 function charsToBinary(text_to_convert){
     
-    let output_value = "";
-    for (var i = 0; i < text_to_convert.length; i++)
-      output_value += text_to_convert[i].charCodeAt(0).toString(2) + " ";
-    return output_value;
+    let outputValue = '';
+
+    for (var i = 0; i < text_to_convert.length; ++i){
+        let tempValueOfString = '';
+        tempValueOfString += text_to_convert[i].charCodeAt(0).toString(2);
+        for( let i = 0 ; i < 7 - tempValueOfString.length ; ++i ){
+            outputValue += '0';
+        }
+        if( i !== text_to_convert.length )
+            outputValue += tempValueOfString + ' ';
+    }
+    return outputValue;
 }
 
 function binaryToChars(text_to_deconvert){
@@ -16,16 +26,30 @@ function binaryToChars(text_to_deconvert){
     return output_value;
 }
 
-function cipherLSFR(text){
+export function cipherLSFR(text, coded){
+    reloadState();
     let binaryString = charsToBinary(text);
+    console.log( 'start', binaryString );
     let binaryStringInArray = binaryString.split(" ");
     let newCodedBinaryString = [];
-    binaryString.forEach((e) =>{
+    binaryStringInArray.forEach((e) =>{
         let newlyCreatedString = '';
         for(let i = 0 ; i < e.length ; ++i){
-            lsfr()
-            newlyCreatedString += '';
+            let random_bit = lfsr( coded );
+
+            let stringGet = parseInt( e[i] ) ^ random_bit;
+
+            newlyCreatedString += stringGet;
         }
+        if( newlyCreatedString !== '' )
+            newCodedBinaryString.push(newlyCreatedString);
     });
-    return binary_to_chars(text);
+    let codedText = newCodedBinaryString.join(' ');
+    console.log( 'end', newCodedBinaryString);
+    return binaryToChars(codedText);
 }
+
+
+// let string = cipherLSFR( "''''",'x^4+x^2+x^3')
+// console.log( string );
+
