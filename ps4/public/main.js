@@ -19,7 +19,6 @@ startButton.addEventListener('click', () => {
             if (!state)
                 clearInterval(interval)
             var tmp = lfsr(taps)
-            console.log(tmp)
             output.value += tmp
         }, 500)
     }

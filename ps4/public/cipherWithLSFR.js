@@ -29,7 +29,6 @@ function binaryToChars(text_to_deconvert){
 export function cipherLSFR(text, coded){
     reloadState();
     let binaryString = charsToBinary(text);
-    console.log( 'start', binaryString );
     let binaryStringInArray = binaryString.split(" ");
     let newCodedBinaryString = [];
     binaryStringInArray.forEach((e) =>{
@@ -45,11 +44,5 @@ export function cipherLSFR(text, coded){
             newCodedBinaryString.push(newlyCreatedString);
     });
     let codedText = newCodedBinaryString.join(' ');
-    console.log( 'end', newCodedBinaryString);
     return binaryToChars(codedText);
 }
-
-
-// let string = cipherLSFR( "''''",'x^4+x^2+x^3')
-// console.log( string );
-
