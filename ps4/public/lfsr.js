@@ -19,13 +19,13 @@ export function generateBytes(taps) {
 }
 
 function parser(taps) {
-    var expected = taps.split(/\s/).join('')
-    expected = expected.replace(/1\+|\+1/, '')
-    expected = expected.replace(/x\^/, '')
-    expected = expected.replace(/x/, '1')
+    var expected = taps.split(/\s/g).join('')
+    expected = expected.replace(/1\+|\+1/g, '')
+    expected = expected.replace(/x\^/g, '')
+    expected = expected.replace(/x/g, '1')
 
     var array = expected.split(/\+/)
-    array.forEach((n, i) => array[i] = BigInt(parseInt(n)))
+    array.forEach( (n, i) => array[i] = BigInt(parseInt(n)) )
 
     return array
 }
