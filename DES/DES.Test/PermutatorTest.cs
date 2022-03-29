@@ -26,7 +26,7 @@ namespace DES.Test
 
             ulong output = Permutator.Permutate(input, matrix);
 
-            Assert.Equal(0b10100101ul, output);
+            Assert.Equal(0b01011010ul, output);
         }
 
         [Fact]
@@ -37,7 +37,7 @@ namespace DES.Test
 
             ulong output = Permutator.Permutate(input, matrix);
 
-            Assert.Equal(0b0101100011100011ul, output);
+            Assert.Equal(0b0011100011100101ul, output);
         }
 
         [Fact]
@@ -48,7 +48,7 @@ namespace DES.Test
 
             ulong output = Permutator.Permutate(input, matrix);
 
-            Assert.Equal(0b00101111000101011101000001001111ul, output);
+            Assert.Equal(0b00001101111101000101011100001011ul, output);
         }
     }
 }
