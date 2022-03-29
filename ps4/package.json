@@ -1,10 +1,10 @@
 {
-  "name": "ps3",
+  "name": "ps4",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "babel index.js -d dist && cp -r ./public ./dist/ && cp index.html ./dist/",
+    "build": "babel index.js -d dist && cp -r ./public ./dist/ && cp *.html ./dist/",
     "start": "npm run build && nodemon dist/index.js",
     "test": "mocha --require @babel/register"
   },
