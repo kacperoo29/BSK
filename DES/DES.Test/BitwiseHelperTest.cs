@@ -1,3 +1,4 @@
+using System;
 using DES.Core;
 using Shouldly;
 using Xunit;
@@ -44,6 +45,27 @@ namespace DES.Test
             ulong result = BitwiseHelper.ReverseBits(input);
 
             Assert.Equal(0xF7B3D591E6A2C480, result);
+        }
+
+        [Fact]
+        public void ShouldSplitProperly()
+        {
+            ulong input = 0x000000AF000000BC;
+
+            var result = BitwiseHelper.Split(input);
+
+            Assert.Equal(0xAFu, result.Item1);
+            Assert.Equal(0xBCu, result.Item2);
+        }
+
+        [Fact]
+        public void TestName()
+        {
+            Tuple<uint, uint> input = new Tuple<uint, uint>(0xAF, 0xBC);
+        
+            var result = BitwiseHelper.Combine(input);
+        
+            Assert.Equal(0x000000AF000000BCul, result);
         }
     }
 }

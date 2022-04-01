@@ -31,5 +31,19 @@ namespace DES.Core
 
             return input;
         }
+
+        public static Tuple<uint, uint> Split(ulong input)
+        {
+            return new Tuple<uint, uint>((uint)(input >> 32), (uint)input);
+        }
+
+        public static ulong Combine(Tuple<uint, uint> input)
+        {
+            ulong result = 0;
+            result ^= ((ulong)input.Item1 << 32);
+            result ^= (ulong)input.Item2;
+
+            return result;
+        }
     }
 }
