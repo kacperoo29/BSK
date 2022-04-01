@@ -1,17 +1,32 @@
+using System.Diagnostics;
+
 namespace DES.Core
 {
     public static class BitwiseHelper 
     {
-        public static ulong ShiftHalfsLeft(ulong input, int places)
+        public static ulong ShiftHalfsLeft(ulong input, int places, int contentSize = sizeof(ulong) * 8)
         {
-            uint leftPart = (uint)(input >> 32);
+            if (contentSize % 2 != 0)
+                throw new Exception("Content size should be divisible by 2");
+
+            if (contentSize > sizeof(ulong) * 8)
+                throw new Exception("Content size can't be more than 64 bits");
+            
+            int sizeDiff = ((sizeof(ulong) * 8) - contentSize) / 2;
+
+            uint leftPart = (uint)(input >> (contentSize / 2));
             uint rightPart = (uint)input;
 
             leftPart <<= places;
             rightPart <<= places;
 
+            leftPart <<= sizeDiff;
+            leftPart >>= sizeDiff;
+            rightPart <<= sizeDiff;
+            rightPart >>= sizeDiff;
+
             ulong result = 0;
-            result ^= ((ulong)leftPart << 32);
+            result ^= ((ulong)leftPart << (contentSize / 2));
             result ^= (ulong)rightPart;
 
             return result;

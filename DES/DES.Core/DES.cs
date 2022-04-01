@@ -13,12 +13,6 @@ namespace DES.Core
 
             for (int i = 0; i < 16; ++i)
             {
-                // TODO: shiftedKey should be dense, now there is space beetween parts
-                // and/or the type sizes do not match
-                // parametrize shifthalfsleft so it is aware of content length
-                // it should properly dispose of unneeded bits, now there will remain some junk
-                // because of 32bit ints, have to do additional shifts to get rid of it
-                // + tests in those cases
                 ulong shiftedKey = BitwiseHelper.ShiftHalfsLeft(key, KeyShift[i]);
                 key = Permutator.Permutate(shiftedKey, Permutator.PC2);
 

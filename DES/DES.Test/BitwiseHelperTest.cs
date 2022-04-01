@@ -59,13 +59,23 @@ namespace DES.Test
         }
 
         [Fact]
-        public void TestName()
+        public void ShouldCombine()
         {
             Tuple<uint, uint> input = new Tuple<uint, uint>(0xAF, 0xBC);
         
             var result = BitwiseHelper.Combine(input);
         
             Assert.Equal(0x000000AF000000BCul, result);
+        }
+
+        [Fact]
+        public void ShiftShouldBeContentAware()
+        {
+            ulong input = 0xF000000F000000;
+
+            ulong result = BitwiseHelper.ShiftHalfsLeft(input, 2, 56);
+
+            Assert.Equal(0xC000000C000000ul, result);
         }
     }
 }
