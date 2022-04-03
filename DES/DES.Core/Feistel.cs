@@ -17,7 +17,7 @@ namespace DES.Core
                 int idxValue = ((((byte)(extended >> (6 * (7 - i)))) << 2) >> 2);
 
                 // First (0x20) digit as higher part of index and last (0x1) as lower part of index
-                int x = ((idxValue & 0x20) << 1) | idxValue & 0x1;
+                int x = ((idxValue & 0x20) >> 4) | idxValue & 0x1;
                 // Middle part as y index (0x1E)
                 int y = (idxValue & 0x1E) >> 1;
 
