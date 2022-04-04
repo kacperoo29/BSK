@@ -35,9 +35,10 @@ namespace DES.Core
         public static ulong Permutate(ulong input, List<int> matrix)
         {
             ulong result = 0;
+            int max = matrix.Max();
             for (int i = 0; i < matrix.Count; ++i)
             {
-                result ^= (input & (1ul << (matrix.Count - 1 - (matrix[i] - 1)))) != 0 ? (1ul << (matrix.Count - 1 - i)) : 0;
+                result ^= ((input << (64 - max)) & (1ul << (64 - matrix[i]))) != 0 ? (1ul << (matrix.Count - 1 - i)) : 0;
             }
 
             return result;

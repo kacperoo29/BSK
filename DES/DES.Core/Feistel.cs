@@ -8,13 +8,12 @@ namespace DES.Core
         {
             ulong extended = Permutator.Permutate((ulong)input, Permutator.E);
             uint result = 0;
+            ulong mask = 0x3F; // six bits
             extended ^= key;
             for (int i = 0; i < 8; ++i)
             {
-                // Shift left 6 * place bits to get current 
-                // then cast to byte and shift right 2 to get rid of unneeded part
-                // shift left 2 after that to align with beggining
-                int idxValue = ((((byte)(extended >> (6 * (7 - i)))) << 2) >> 2);
+                // Mask bits and shift them
+                int idxValue = (int)((extended & mask) >> i * 6);
 
                 // First (0x20) digit as higher part of index and last (0x1) as lower part of index
                 int x = ((idxValue & 0x20) >> 4) | idxValue & 0x1;
@@ -22,10 +21,13 @@ namespace DES.Core
                 int y = (idxValue & 0x1E) >> 1;
 
                 // Xor result with number from table at right index (4 * place bits)
-                result ^= (S[i][x][y]) << (4 * (7 - i));
+                result ^= S[7 - i][x][y] << (4 *  i);
+
+                // Forward mask for next iteration
+                mask <<= 6;
             }
 
-            return (uint)Permutator.Permutate((ulong)result, Permutator.P);
+            return (uint)Permutator.Permutate(result, Permutator.P);
         }
 
         private static uint[][][] S = new uint[][][] {
@@ -35,7 +37,6 @@ namespace DES.Core
                 new uint[] { 4,  1,  14, 8, 13, 6,  2,  11, 15, 12, 9,  7,  3,  10, 5, 0  },
                 new uint[] { 15, 12, 8,  2, 4,  9,  1,  7,  5,  11, 3,  14, 10, 0,  6, 13 }
             },
-            // TODO: Copy proper values
             new uint[][] {
                 new uint[] { 15, 1, 8, 14, 6, 11, 3, 4, 9, 7, 2, 13, 12, 0, 5, 10 },
                 new uint[] { 3, 13, 4, 7, 15, 2, 8, 14, 12, 0, 1, 10, 6, 9, 11, 5 },
@@ -53,8 +54,7 @@ namespace DES.Core
                 new uint[] { 13, 8, 11, 5, 6, 15, 0, 3, 4, 7, 2, 12, 1, 10, 14, 9 },
                 new uint[] { 10, 6, 9, 0, 12, 11, 7, 13, 15, 1, 3, 14, 5, 2, 8, 4 },
                 new uint[] { 3, 15, 0, 6, 10, 1, 13, 8, 9, 4, 5, 11, 12, 7, 2, 14 }
-            },
-            // 
+            },            
             new uint[][] {
                 new uint[] { 2, 12, 4, 1, 7, 10, 11, 6, 8, 5, 3, 15, 13, 0, 14, 9 },
                 new uint[] { 14, 11, 2, 12, 4, 7, 13, 1, 5, 0, 15, 10, 3, 9, 8, 6 },

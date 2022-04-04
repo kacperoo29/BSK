@@ -1,3 +1,4 @@
+using System;
 using DES.Core;
 using Xunit;
 
@@ -8,7 +9,12 @@ namespace DES.Test
         [Fact]
         public void ShouldCipher()
         {
-            // TODO: Calculate something ez by hand and test it
+            uint input = 0b1010; 
+            ulong key = 0b1000;
+
+            uint output = Feistel.FeistelFunc(input, key);
+
+            Assert.Equal(0xDAD8D3BD, output);
         }
     }
 }
