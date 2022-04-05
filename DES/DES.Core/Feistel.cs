@@ -6,7 +6,7 @@ namespace DES.Core
     {
         public static uint FeistelFunc(uint input, ulong key)
         {
-            ulong extended = Permutator.Permutate((ulong)input, Permutator.E);
+            ulong extended = Permutator.Permutate(input, Permutator.E, 32);
             uint result = 0;
             ulong mask = 0x3F; // six bits
             extended ^= key;
@@ -27,7 +27,7 @@ namespace DES.Core
                 mask <<= 6;
             }
 
-            return (uint)Permutator.Permutate(result, Permutator.P);
+            return (uint)Permutator.Permutate(result, Permutator.P, 32);
         }
 
         private static uint[][][] S = new uint[][][] {

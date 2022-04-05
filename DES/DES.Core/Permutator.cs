@@ -32,13 +32,17 @@ namespace DES.Core
         /// </summary>
         public static List<int> P { get => _pPermutation; }
 
-        public static ulong Permutate(ulong input, List<int> matrix)
+        public static ulong Permutate(ulong input, List<int> matrix, int sourceSize)
         {
             ulong result = 0;
-            int max = matrix.Max();
+            int diff = 64 - sourceSize;
+            input <<= diff;
+            
             for (int i = 0; i < matrix.Count; ++i)
             {
-                result ^= ((input << (64 - max)) & (1ul << (64 - matrix[i]))) != 0 ? (1ul << (matrix.Count - 1 - i)) : 0;
+                result ^= (input & (1ul << (64 - matrix[i]))) != 0ul ? 1ul : 0ul;
+                if (i != matrix.Count - 1)
+                    result <<= 1;
             }
 
             return result;

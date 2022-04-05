@@ -1,10 +1,10 @@
-using System.Diagnostics;
+using System;
 
 namespace DES.Core
 {
     public static class BitwiseHelper
     {
-        public static ulong ShiftHalfsLeft(ulong input, int places, int contentSize = sizeof(ulong) * 8, bool padWithOnes = false)
+        public static ulong ShiftHalfsLeft(ulong input, int places, int contentSize = sizeof(ulong) * 8, bool circular = false)
         {
             if (contentSize % 2 != 0)
                 throw new Exception("Content size should be divisible by 2");
@@ -20,16 +20,30 @@ namespace DES.Core
             leftPart <<= places;
             rightPart <<= places;
 
+            if (circular)
+            {
+                uint mask = 0x0;
+                for (int i = 0; i < places; ++i)
+                {
+                    mask ^= 1;
+                    mask <<= 1;
+                }
+                mask >>= 1;
+                mask <<= 32 - sizeDiff;
+
+                uint leftRemainder = leftPart & mask;
+                leftRemainder >>= 32 - sizeDiff;
+                uint rightRemainder = rightPart & mask;
+                rightRemainder >>= 32 - sizeDiff;
+
+                leftPart |= leftRemainder;
+                rightPart |= rightRemainder;
+            }
+
             leftPart <<= sizeDiff;
             leftPart >>= sizeDiff;
             rightPart <<= sizeDiff;
             rightPart >>= sizeDiff;
-
-            if (padWithOnes)
-            {
-                leftPart |= (1u << places) - 1;
-                rightPart |= (1u << places) - 1;
-            }
 
             ulong result = 0;
             result ^= ((ulong)leftPart << (contentSize / 2));

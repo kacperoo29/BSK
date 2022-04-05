@@ -5,27 +5,14 @@ namespace DES.Test
 {
     public class DESTest
     {
-        [Fact]
-        public void ShouldEncode()
+        [Theory]
+        [InlineData(0x0123456789ABCDEF, 0xFFFFFFFFFFFFFFFF, 0x6DCE0DC9006556A3)]
+        [InlineData(0x1234123456785678, 0xCCC, 0xAAC89B66CD98958A)]
+        public void ShouldEncode(ulong input, ulong key, ulong expected)
         {
-            ulong input = 0x0123456789ABCDEF;
-            ulong key = 0xFFFFFFFFFFFFFFFF;
-
             ulong output = DESImpl.Encode(input, key);
 
-            Assert.Equal(0x6DCE0DC9006556A3ul, output);
-        }
-        
-        [Fact]
-        public void ShouldEncodeDesShortKey()
-        {
-            ulong input = 0x1234123456785678;
-            ulong key = 0xCCC;
-
-            ulong output = DESImpl.Encode(input, key);
-
-            Assert.Equal(0xAAC89B66CD98958Aul, output);
-            
+            Assert.Equal(expected, output);
         }
     }
 }
