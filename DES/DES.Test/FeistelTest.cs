@@ -6,15 +6,13 @@ namespace DES.Test
 {
     public class FeistelTest
     {
-        [Fact]
-        public void ShouldCipher()
+        [Theory]
+        [InlineData(0b1010, 0b1000, 0xDAD8D3BD)]
+        public void ShouldCipher(uint input, ulong key, ulong expected)
         {
-            uint input = 0b1010; 
-            ulong key = 0b1000;
-
             uint output = Feistel.FeistelFunc(input, key);
 
-            Assert.Equal(0xDAD8D3BD, output);
+            Assert.Equal(expected, output);
         }
     }
 }

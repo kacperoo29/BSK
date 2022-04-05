@@ -98,5 +98,15 @@ namespace DES.Test
 
             Assert.Equal(0x2FAC00001FFFFFFFul, result);
         }
+
+        [Fact]
+        public void ShouldFillWithZeroes()
+        {
+            ulong input = 0x2C;
+            
+            ulong result = BitwiseHelper.ShiftToEndAndPadWithZeroes(input);
+
+            Assert.Equal(0x2C00000000000000ul, result);
+        }
     }
 }

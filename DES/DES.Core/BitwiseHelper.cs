@@ -93,5 +93,18 @@ namespace DES.Core
 
             return input;
         }
+
+        public static ulong ShiftToEndAndPadWithZeroes(ulong input)
+        {
+            ulong mask = 0xF000000000000000ul;
+
+            for (int i = 0; (input & mask) == 0; ++i)
+            {
+                input <<= 4;
+                input &= (~0x0ul) - 0xFul;
+            }
+
+            return input;
+        }
     }
 }
