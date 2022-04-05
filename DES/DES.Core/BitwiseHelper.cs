@@ -2,7 +2,7 @@ using System.Diagnostics;
 
 namespace DES.Core
 {
-    public static class BitwiseHelper 
+    public static class BitwiseHelper
     {
         public static ulong ShiftHalfsLeft(ulong input, int places, int contentSize = sizeof(ulong) * 8, bool padWithOnes = false)
         {
@@ -11,7 +11,7 @@ namespace DES.Core
 
             if (contentSize > sizeof(ulong) * 8)
                 throw new Exception("Content size can't be more than 64 bits");
-            
+
             int sizeDiff = ((sizeof(ulong) * 8) - contentSize) / 2;
 
             uint leftPart = (uint)(input >> (contentSize / 2));
@@ -69,12 +69,15 @@ namespace DES.Core
 
         public static ulong ShiftToEndAndPadWithOnes(ulong input)
         {
-            ulong mask = 1ul << 64;
-            int count = 0;
-            while ((input & mask) == 0)
-                ++count;
+            ulong mask = 0xF000000000000000ul;
 
-            return input | ((1ul << count) - 1);        
+            for (int i = 0; (input & mask) == 0; ++i)
+            {
+                input <<= 4;
+                input |= 0xFul << (i * 4);
+            }
+
+            return input;
         }
     }
 }
