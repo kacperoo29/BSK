@@ -66,5 +66,15 @@ namespace DES.Core
 
             return result;
         }
+
+        public static ulong ShiftToEndAndPadWithOnes(ulong input)
+        {
+            ulong mask = 1ul << 64;
+            int count = 0;
+            while ((input & mask) == 0)
+                ++count;
+
+            return input | ((1ul << count) - 1);        
+        }
     }
 }
