@@ -5,6 +5,7 @@ namespace DES.Core
         public static ulong Encode(ulong input, ulong key)
         {
             ulong result = Permutator.Permutate(input, Permutator.IP);
+            key = BitwiseHelper.ShiftToEndAndPadWithOnes(key);
             key = Permutator.Permutate(key, Permutator.PC);
 
             var halfsTuple = BitwiseHelper.Split(result);
