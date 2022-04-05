@@ -77,5 +77,26 @@ namespace DES.Test
 
             Assert.Equal(0xC000000C000000ul, result);
         }
+
+        
+        [Fact]
+        public void ShouldFillWithOnes()
+        {
+            ulong input = 0x2C;
+            
+            ulong result = BitwiseHelper.ShiftToEndAndPadWithOnes(input);
+
+            Assert.Equal(0x2CFFFFFFFFFFFFFFul, result);
+        }
+
+        [Fact]
+        public void ShouldFillWithMoreOnes()
+        {
+            ulong input = 0x2FAC00001;
+            
+            ulong result = BitwiseHelper.ShiftToEndAndPadWithOnes(input);
+
+            Assert.Equal(0x2FAC00001FFFFFFFul, result);
+        }
     }
 }

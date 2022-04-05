@@ -74,7 +74,7 @@ namespace DES.Core
             for (int i = 0; (input & mask) == 0; ++i)
             {
                 input <<= 4;
-                input |= 0xFul << (i * 4);
+                input |= 0xFul;
             }
 
             return input;
