@@ -13,17 +13,17 @@ function App() {
   return (
     <Container>
       <form>
-        <div class="form-group">
+        <div className="form-group">
           <label for="input">Value for input</label>
-          <input readOnly={input} type="text" class="form-control" id="input" placeholder="Input"/>
+          <input value={input} onChange={handleChange} type="text" className="form-control" id="input" placeholder="Input"/>
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <label for="formGroupExampleInput2">Output</label>
-          <input disabled value={output} type="text" class="form-control" id="output" placeholder="Output"/>
+          <input disabled value={output} type="text" className="form-control" id="output" placeholder="Output"/>
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <label for="formGroupExampleInput2">Key</label>
-          <input readOnly={key} type="text" class="form-control" id="key" placeholder="Key"/>
+          <input value={key} onChange={handleChange2} type="text" className="form-control" id="key" placeholder="Key"/>
         </div>
         <Button variant="primary" onClick={yourMom}>
           Submit
@@ -31,17 +31,23 @@ function App() {
       </form>
   </Container>
   );
+  function handleChange(event){
+    setInput(event.target.value)
+  }
+  function handleChange2(event){
+    setKey(event.target.value)
+  }
   function yourMom(){
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      data: JSON.stringify({"file": "a2","key": 0})
+      body: JSON.stringify({"file": input, "key": key})
     }
-    console.log()
     fetch('http://localhost:5090/api/example', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data);
+          setOutput(data)
          } );
     }
 }
