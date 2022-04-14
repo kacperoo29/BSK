@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BSK PS3</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="form-group">
+        <label for="p">P</label>
+        <input class="form-control" type="text" id="p" name="p" />
+      </div>
+      
+      <div class="form-group">
+        <label for="q">Q</label>
+        <input class="form-control" type="text" id="q" name="q" />
+      </div>
+      <div>
+        <span>n: <span id="n"></span></span>
+        <span>l: <span id="l"></span></span>
+        <span>e: <span id="e"></span></span>
+        <span>d: <span id="d"></span></span>
+      </div>
+      <div>
+        <p><br/> <span id="enKeyListSpan"></span></p>
+        <p><br/> <span id="deKeyListSpan"></span></p>
+        <span>Public key: <span id="public-key"></span></span>
+        <span>Private key: <span id="private-key"></span></span>
+      </div>
+
+      <div>
+        <h3>Encoding</h3>
+        <div class="form-group">
+          <label for="message">message</label>
+          <input class="form-control" type="text" id="message" name="message" />
+        </div>
+        <div>
+          <p >Ascii:<br/> <span style="color: red" id="ascii"></span></p>
+          <p>Encrypted message: <br/> <span id="encrypted-msg"></span></p>
+        </div>
+      </div>
+
+      <div>
+      <h3>Decoding</h3>
+        <div class="form-group">
+          <label for="encrypted-msg-textbox">encrypted-msg-textbox</label>
+          <input class="form-control" type="text" id="encrypted-msg-textbox" name="encrypted-msg-textbox" />
+        </div>
+        <div>
+          <p >Ascii for encrypted:<br/> <span style="color: red" id="ascii-decrypted"></span></p>
+          <p>Decrypted message: <br/> <span id="decrypted-msg"></span></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary" id="encode">Encode</button>
+        <button class="btn btn-info" id="calculate">Calculate</button>
+        <button class="btn btn-secondary" id="decode">Decode</button>
+      </div>
+    </div>
+
+    <script type="module" src="/public/main.js"></script>
+  </body>
+</html>
