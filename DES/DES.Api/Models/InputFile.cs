@@ -2,7 +2,7 @@ namespace DES.Api.Models
 {
     public class InputFile
     {
-        public ulong File { get; set; }
+        public List<IFormFile>? Files { get; set; }
         public ulong Key { get; set; }
     }
 }

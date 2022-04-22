@@ -1,9 +1,10 @@
+using System.Net.Http.Headers;
 using DES.Api.Models;
 using DES.Core;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DES.Api.Controllers
-{   
+{
     [ApiController]
     public class DESController : ControllerBase
     {
@@ -16,14 +17,47 @@ namespace DES.Api.Controllers
 
         [HttpPost]
         [Route("api/encodeFile")]
-        public ActionResult<byte[]> EncodeFile([FromBody] InputFile file)
+        public async Task<ActionResult<List<FileContentResult>>> EncodeFile([FromForm] InputFile input)
         {
-            // Pad file so that bitCount % 64 == 0
+            List<byte[]> files = new();
+            if (input.Files == null)
+                return BadRequest("Must specify files to encode");
 
-            // Encode every 64 bits
+            foreach (var file in input.Files)
+            {
+                await using var memoryStream = new MemoryStream();
+                await file.CopyToAsync(memoryStream);
+                files.Add(memoryStream.ToArray());
+            }
 
-            // Throw them all together
-            throw new NotImplementedException();
+            List<FileContentResult> encodedFiles = new();
+            foreach (var file in files)
+            {
+                List<byte> bytes = new(file);
+                for (int i = bytes.Count % 8; i != 0 && i < 8; ++i)
+                    bytes.Add(0);
+
+                List<ulong> encodedList = new();
+                for (int i = 0; i < bytes.Count; i += 8)
+                {
+                    ulong result = 0x0;
+                    for (int j = 0; j < 8; ++j)
+                        result |= ((ulong)bytes[j + i] << (j * 8));
+
+                    encodedList.Add(DESImpl.Encode(result, input.Key));
+                }
+
+                List<byte> split = new();
+                foreach (var encoded in encodedList)
+                {
+                    for (int i = 0; i < 8; ++i)
+                        split.Add((byte)(encoded >> (i * 8)));
+                }
+
+                encodedFiles.Add(new FileContentResult(split.ToArray(), "application/x-binary"));
+            }
+            
+            return Ok(encodedFiles);
         }
     }
 }
