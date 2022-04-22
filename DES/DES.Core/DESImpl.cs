@@ -10,8 +10,8 @@ namespace DES.Core
 
             var halfsTuple = BitwiseHelper.Split(result);
             uint[] halfs = new uint[] { halfsTuple.Item1, halfsTuple.Item2 };
-            ulong shiftedKey = key;
 
+            ulong shiftedKey = key;
             for (int i = 0; i < 16; ++i)
             {
                 shiftedKey = BitwiseHelper.ShiftHalfsLeft(shiftedKey, _keyShift[i], 56, true);
@@ -33,6 +33,7 @@ namespace DES.Core
 
             var halfsTuple = BitwiseHelper.Split(result);
             uint[] halfs = new uint[] { halfsTuple.Item1, halfsTuple.Item2 };
+
             ulong shiftedKey = key;
             List<ulong> keys = new();
             for (int i = 0; i < 16; ++i)
@@ -43,12 +44,8 @@ namespace DES.Core
                 keys.Add(key);
             }
 
-            for (int i = 15; i != -1; --i)
-            {
-                uint tmp = halfs[1];
-                halfs[1] = halfs[0] ^ Feistel.FeistelFunc(halfs[1], keys[i]);
-                halfs[0] = tmp;
-            }
+            for (int i = 15; i != -1; --i)            
+                halfs[(i + 1) % 2] ^= Feistel.FeistelFunc(halfs[i % 2], keys[i]);            
 
             result = BitwiseHelper.Combine(new Tuple<uint, uint>(halfs[1], halfs[0]));
 

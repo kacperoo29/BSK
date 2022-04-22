@@ -1,6 +1,5 @@
 using DES.Api.Models;
 using DES.Core;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DES.Api.Controllers
@@ -16,12 +15,38 @@ namespace DES.Api.Controllers
         }
 
         [HttpPost]
-        [Route("api/encodeFile")]
-        public async Task<ActionResult<List<FileContentResult>>> EncodeFile([FromForm] InputFile input)
+        [Route("api/encryptFile")]
+        public async Task<ActionResult<List<FileContentResult>>> EncryptFile([FromForm] InputFile input)
+        {            
+            try
+            {
+                return Ok(await DecodeOrEncodeFile(input, DESImpl.Encrypt));
+            }
+            catch (InvalidDataException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("api/decryptFile")]
+        public async Task<ActionResult<List<FileContentResult>>> DecryptFile([FromForm] InputFile input)
+        {
+            try
+            {
+                return Ok(await DecodeOrEncodeFile(input, DESImpl.Decrypt));
+            }
+            catch (InvalidDataException e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        private async Task<List<FileContentResult>> DecodeOrEncodeFile(InputFile input, Func<ulong, ulong, ulong> function)
         {
             List<byte[]> files = new();
             if (input.Files == null)
-                return BadRequest("Must specify files to encode");
+                throw new InvalidDataException("Must specify files to encode");
 
             foreach (var file in input.Files)
             {
@@ -42,9 +67,9 @@ namespace DES.Api.Controllers
                 {
                     ulong result = 0x0;
                     for (int j = 0; j < 8; ++j)
-                        result |= ((ulong)bytes[(7 - j)+ i] << (j * 8));
+                        result |= ((ulong)bytes[(7 - j) + i] << (j * 8));
 
-                    encodedList.Add(DESImpl.Encrypt(result, input.Key));
+                    encodedList.Add(function(result, input.Key));
                 }
 
                 List<byte> split = new();
@@ -56,8 +81,8 @@ namespace DES.Api.Controllers
 
                 encodedFiles.Add(new FileContentResult(split.ToArray(), "application/x-binary"));
             }
-            
-            return Ok(encodedFiles);
+
+            return encodedFiles;
         }
     }
 }

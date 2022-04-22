@@ -54,8 +54,8 @@ export const DESApiAxiosParamCreator = function (configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiEncodeFilePost: async (files?: Array<any>, key?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/encodeFile`;
+        apiDecryptFilePost: async (files?: Array<any>, key?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/decryptFile`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -73,11 +73,13 @@ export const DESApiAxiosParamCreator = function (configuration?: Configuration) 
                     localVarFormParams.append('Files', element as any);
                 })
             }
+
     
             if (key !== undefined) { 
                 localVarFormParams.append('Key', key as any);
-            }            
-
+            }
+    
+    
             localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -123,6 +125,51 @@ export const DESApiAxiosParamCreator = function (configuration?: Configuration) 
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {Array<any>} [files] 
+         * @param {number} [key] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiEncryptFilePost: async (files?: Array<any>, key?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/encryptFile`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            if (files) {
+                files.forEach((element) => {
+                    localVarFormParams.append('Files', element as any);
+                })
+            }
+
+    
+            if (key !== undefined) { 
+                localVarFormParams.append('Key', key as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -140,8 +187,8 @@ export const DESApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiEncodeFilePost(files?: Array<any>, key?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<any>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiEncodeFilePost(files, key, options);
+        async apiDecryptFilePost(files?: Array<any>, key?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<any>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiDecryptFilePost(files, key, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -152,6 +199,17 @@ export const DESApiFp = function(configuration?: Configuration) {
          */
         async apiEncodePost(input64?: Input64, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<number>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiEncodePost(input64, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {Array<any>} [files] 
+         * @param {number} [key] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiEncryptFilePost(files?: Array<any>, key?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<any>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiEncryptFilePost(files, key, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -171,8 +229,8 @@ export const DESApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiEncodeFilePost(files?: Array<any>, key?: number, options?: any): AxiosPromise<Array<any>> {
-            return localVarFp.apiEncodeFilePost(files, key, options).then((request) => request(axios, basePath));
+        apiDecryptFilePost(files?: Array<any>, key?: number, options?: any): AxiosPromise<Array<any>> {
+            return localVarFp.apiDecryptFilePost(files, key, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -182,6 +240,16 @@ export const DESApiFactory = function (configuration?: Configuration, basePath?:
          */
         apiEncodePost(input64?: Input64, options?: any): AxiosPromise<number> {
             return localVarFp.apiEncodePost(input64, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Array<any>} [files] 
+         * @param {number} [key] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiEncryptFilePost(files?: Array<any>, key?: number, options?: any): AxiosPromise<Array<any>> {
+            return localVarFp.apiEncryptFilePost(files, key, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -201,8 +269,8 @@ export class DESApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DESApi
      */
-    public apiEncodeFilePost(files?: Array<any>, key?: number, options?: AxiosRequestConfig) {
-        return DESApiFp(this.configuration).apiEncodeFilePost(files, key, options).then((request) => request(this.axios, this.basePath));
+    public apiDecryptFilePost(files?: Array<any>, key?: number, options?: AxiosRequestConfig) {
+        return DESApiFp(this.configuration).apiDecryptFilePost(files, key, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -214,6 +282,18 @@ export class DESApi extends BaseAPI {
      */
     public apiEncodePost(input64?: Input64, options?: AxiosRequestConfig) {
         return DESApiFp(this.configuration).apiEncodePost(input64, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Array<any>} [files] 
+     * @param {number} [key] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DESApi
+     */
+    public apiEncryptFilePost(files?: Array<any>, key?: number, options?: AxiosRequestConfig) {
+        return DESApiFp(this.configuration).apiEncryptFilePost(files, key, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
