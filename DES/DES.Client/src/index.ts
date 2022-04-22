@@ -8,7 +8,6 @@ encodeFileButton.onclick = (event: MouseEvent) => {
     if (formFile.files.length == 0) return;
 
     let files = new Array<File>()
-    let reader = new FileReader();
     Array.from(formFile.files).forEach((file) => files.push(file))
     api.apiEncodeFilePost(files, 64).then((response) => {
         response.data[0].fileContents
@@ -16,7 +15,7 @@ encodeFileButton.onclick = (event: MouseEvent) => {
         if (files == null)
             return;
 
-        files.forEach((file, i) => {        
+        files.forEach((file, i) => {
             var url = URL.createObjectURL(new Blob([file.fileContents]))
             var a = document.createElement("a")
             a.style.display = "none";

@@ -12,7 +12,7 @@ namespace DES.Api.Controllers
         [Route("api/encode")]
         public ActionResult<ulong> Encode64([FromBody] Input64 input)
         {
-            return DESImpl.Encode(input.Input, input.Key);
+            return DESImpl.Encrypt(input.Input, input.Key);
         }
 
         [HttpPost]
@@ -44,7 +44,7 @@ namespace DES.Api.Controllers
                     for (int j = 0; j < 8; ++j)
                         result |= ((ulong)bytes[(7 - j)+ i] << (j * 8));
 
-                    encodedList.Add(DESImpl.Encode(result, input.Key));
+                    encodedList.Add(DESImpl.Encrypt(result, input.Key));
                 }
 
                 List<byte> split = new();
