@@ -42,7 +42,7 @@ namespace DES.Api.Controllers
                 {
                     ulong result = 0x0;
                     for (int j = 0; j < 8; ++j)
-                        result |= ((ulong)bytes[j + i] << (j * 8));
+                        result |= ((ulong)bytes[(7 - j)+ i] << (j * 8));
 
                     encodedList.Add(DESImpl.Encode(result, input.Key));
                 }
