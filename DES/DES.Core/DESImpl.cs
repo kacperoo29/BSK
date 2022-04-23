@@ -5,7 +5,6 @@ namespace DES.Core
         public static ulong Encrypt(ulong input, ulong key)
         {
             ulong result = Permutator.Permutate(input, Permutator.IP, 64);
-            key = BitwiseHelper.ShiftToEndAndPadWithOnes(key);
             key = Permutator.Permutate(key, Permutator.PC, 64);
 
             var halfsTuple = BitwiseHelper.Split(result);
@@ -27,8 +26,7 @@ namespace DES.Core
 
         public static ulong Decrypt(ulong input, ulong key)
         {
-            ulong result = Permutator.Permutate(input, Permutator.IP, 64);            
-            key = BitwiseHelper.ShiftToEndAndPadWithOnes(key);
+            ulong result = Permutator.Permutate(input, Permutator.IP, 64);
             key = Permutator.Permutate(key, Permutator.PC, 64);
 
             var halfsTuple = BitwiseHelper.Split(result);

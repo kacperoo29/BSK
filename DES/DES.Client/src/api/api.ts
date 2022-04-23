@@ -40,6 +40,25 @@ export interface Input64 {
      */
     'key'?: number;
 }
+/**
+ * 
+ * @export
+ * @interface OutputFile
+ */
+export interface OutputFile {
+    /**
+     * 
+     * @type {string}
+     * @memberof OutputFile
+     */
+    'fileName'?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof OutputFile
+     */
+    'data'?: string | null;
+}
 
 /**
  * DESApi - axios parameter creator
@@ -187,7 +206,7 @@ export const DESApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiDecryptFilePost(files?: Array<any>, key?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<any>>> {
+        async apiDecryptFilePost(files?: Array<any>, key?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OutputFile>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiDecryptFilePost(files, key, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -208,7 +227,7 @@ export const DESApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiEncryptFilePost(files?: Array<any>, key?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<any>>> {
+        async apiEncryptFilePost(files?: Array<any>, key?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OutputFile>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiEncryptFilePost(files, key, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -229,7 +248,7 @@ export const DESApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDecryptFilePost(files?: Array<any>, key?: number, options?: any): AxiosPromise<Array<any>> {
+        apiDecryptFilePost(files?: Array<any>, key?: number, options?: any): AxiosPromise<Array<OutputFile>> {
             return localVarFp.apiDecryptFilePost(files, key, options).then((request) => request(axios, basePath));
         },
         /**
@@ -248,7 +267,7 @@ export const DESApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiEncryptFilePost(files?: Array<any>, key?: number, options?: any): AxiosPromise<Array<any>> {
+        apiEncryptFilePost(files?: Array<any>, key?: number, options?: any): AxiosPromise<Array<OutputFile>> {
             return localVarFp.apiEncryptFilePost(files, key, options).then((request) => request(axios, basePath));
         },
     };

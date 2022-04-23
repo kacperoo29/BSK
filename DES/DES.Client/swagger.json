@@ -99,8 +99,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "string",
-                    "format": "binary"
+                    "$ref": "#/components/schemas/OutputFile"
                   }
                 }
               },
@@ -108,8 +107,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "string",
-                    "format": "binary"
+                    "$ref": "#/components/schemas/OutputFile"
                   }
                 }
               },
@@ -117,8 +115,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "string",
-                    "format": "binary"
+                    "$ref": "#/components/schemas/OutputFile"
                   }
                 }
               }
@@ -170,8 +167,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "string",
-                    "format": "binary"
+                    "$ref": "#/components/schemas/OutputFile"
                   }
                 }
               },
@@ -179,8 +175,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "string",
-                    "format": "binary"
+                    "$ref": "#/components/schemas/OutputFile"
                   }
                 }
               },
@@ -188,8 +183,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "string",
-                    "format": "binary"
+                    "$ref": "#/components/schemas/OutputFile"
                   }
                 }
               }
@@ -211,6 +205,21 @@
           "key": {
             "type": "integer",
             "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OutputFile": {
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
           }
         },
         "additionalProperties": false
