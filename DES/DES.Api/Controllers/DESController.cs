@@ -8,6 +8,8 @@ namespace DES.Api.Controllers
     [ApiController]
     public class DESController : ControllerBase
     {
+        private static LFSR _lfsr = new LFSR();
+
         [HttpPost]
         [Route("api/encode")]
         public ActionResult<ulong> Encode64([FromBody] Input64 input)
@@ -41,6 +43,31 @@ namespace DES.Api.Controllers
             {
                 return BadRequest(e.Message);
             }
+        }
+
+        [HttpGet]
+        [Route("api/getKey")]
+        public ActionResult<ulong> GetKey()
+        {
+            return Ok(_lfsr.GenerateKey());
+        }
+
+        [HttpPut]
+        [Route("api/setSeed")]
+        public ActionResult SetSeed(ulong seed)
+        {
+            _lfsr.Seed = seed;
+
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("api/setTaps")]
+        public ActionResult SetTaps(string taps)
+        {
+            _lfsr.SetTaps(taps);
+
+            return Ok();
         }
 
         private async Task<IEnumerable<OutputFile>> DecodeOrEncodeFile(InputFile input, Func<ulong, ulong, ulong> function)

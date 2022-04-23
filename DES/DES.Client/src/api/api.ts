@@ -189,6 +189,103 @@ export const DESApiAxiosParamCreator = function (configuration?: Configuration) 
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiGetKeyGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/getKey`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} [seed] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiSetSeedPut: async (seed?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/setSeed`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (seed !== undefined) {
+                localVarQueryParameter['seed'] = seed;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} [taps] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiSetTapsPut: async (taps?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/setTaps`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (taps !== undefined) {
+                localVarQueryParameter['taps'] = taps;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -231,6 +328,35 @@ export const DESApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiEncryptFilePost(files, key, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiGetKeyGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<number>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiGetKeyGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {number} [seed] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiSetSeedPut(seed?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSetSeedPut(seed, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {string} [taps] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async apiSetTapsPut(taps?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiSetTapsPut(taps, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -269,6 +395,32 @@ export const DESApiFactory = function (configuration?: Configuration, basePath?:
          */
         apiEncryptFilePost(files?: Array<any>, key?: number, options?: any): AxiosPromise<Array<OutputFile>> {
             return localVarFp.apiEncryptFilePost(files, key, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiGetKeyGet(options?: any): AxiosPromise<number> {
+            return localVarFp.apiGetKeyGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} [seed] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiSetSeedPut(seed?: number, options?: any): AxiosPromise<void> {
+            return localVarFp.apiSetSeedPut(seed, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} [taps] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiSetTapsPut(taps?: string, options?: any): AxiosPromise<void> {
+            return localVarFp.apiSetTapsPut(taps, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -313,6 +465,38 @@ export class DESApi extends BaseAPI {
      */
     public apiEncryptFilePost(files?: Array<any>, key?: number, options?: AxiosRequestConfig) {
         return DESApiFp(this.configuration).apiEncryptFilePost(files, key, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DESApi
+     */
+    public apiGetKeyGet(options?: AxiosRequestConfig) {
+        return DESApiFp(this.configuration).apiGetKeyGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} [seed] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DESApi
+     */
+    public apiSetSeedPut(seed?: number, options?: AxiosRequestConfig) {
+        return DESApiFp(this.configuration).apiSetSeedPut(seed, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} [taps] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DESApi
+     */
+    public apiSetTapsPut(taps?: string, options?: AxiosRequestConfig) {
+        return DESApiFp(this.configuration).apiSetTapsPut(taps, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
