@@ -51,25 +51,7 @@ namespace DES.Api.Controllers
         {
             return Ok(_lfsr.GenerateKey());
         }
-
-        [HttpPut]
-        [Route("api/setSeed")]
-        public ActionResult SetSeed(ulong seed)
-        {
-            _lfsr.Seed = seed;
-
-            return Ok();
-        }
-
-        [HttpPut]
-        [Route("api/setTaps")]
-        public ActionResult SetTaps(string taps)
-        {
-            _lfsr.SetTaps(taps);
-
-            return Ok();
-        }
-
+        
         private async Task<IEnumerable<OutputFile>> DecodeOrEncodeFile(InputFile input, Func<ulong, ulong, ulong> function)
         {
             List<(byte[], string)> files = new();

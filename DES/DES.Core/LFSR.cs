@@ -4,7 +4,7 @@ namespace DES.Core
 {
     public class LFSR
     {
-        private ulong _rail = 1ul << 63;
+        private ulong _rail = (1ul << 63) + 1;
         private List<int> _taps = new() { 1 };
         private List<int> _realTaps = new() { 0 };
 
@@ -13,14 +13,17 @@ namespace DES.Core
 
         public LFSR()
         {
-            SetTaps("x^32+x^26+x^23+x^22+x^16+x^12+x^11+x^10+x^8+x^7+x^5+x^4+x^2+x+1");
+            SetTaps("x^64+x^63+x^61+x^60+1");
         }
 
         public ulong GenerateKey()
         {
             ulong result = 0;
             for (int i = 0; i < 64; ++i)
-                result |= GenerateBit() << i;
+            {
+                result <<= 1;
+                result |= GenerateBit();
+            }
 
             return result;
         }
@@ -32,7 +35,7 @@ namespace DES.Core
                 newbit ^= _rail >> tap;
 
             newbit &= 1;
-            _rail = (_rail >> 1) ^ (newbit << 63);
+            _rail = (_rail >> 1) | (newbit << 63);
 
             return newbit;
         }

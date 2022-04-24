@@ -7,18 +7,12 @@ const decodeFileButton = document.getElementById("decodeFileButton")
 const formFile = <HTMLInputElement>document.getElementById("formFile")
 const generateKeyButton = document.getElementById("generateKeyButton")
 const keyInput = <HTMLInputElement>document.getElementById("key")
-const setPolynomialButton = document.getElementById("setPolynomialButton")
-const polynomialInput = <HTMLInputElement>document.getElementById("polynomial")
 
 let key: number = 0
 keyInput.value = key.toString(16)
 
 keyInput.onchange = (event) => {
     key = parseInt(keyInput.value, 16)
-}
-
-setPolynomialButton.onclick = (event: MouseEvent) => {
-    api.apiSetTapsPut(polynomialInput.value)
 }
 
 encodeFileButton.onclick = (event: MouseEvent) => {
