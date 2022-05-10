@@ -19,9 +19,8 @@ def check_if_files_original_and_generated_the_same(number):
 
     f = open(final_file, "rb")
     f2 = open(file_original, "rb")
-    print(number)
     try:
-        assert(f.read() == f2.read())
+        assert( f2.read() in f.read())
     except:
         print( f"Too many bits in one of files in example with {file_original}")
     
@@ -42,6 +41,8 @@ def make_request(input_file, output_file, key, if_true_encryption_else_decryptio
 
     text = bytes(json.loads(response.content)[0].get("data"), 'utf-8')
     f = open(output_file, "wb")
+    
+    print(base64.decodebytes(text))
     f.write( base64.decodebytes(text) ) 
     binary_file.close
     f.close()
